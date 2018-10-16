@@ -5,7 +5,9 @@ const add = require("sum-of-two-numbers");
 exports.handler = (event, context, callback) => {
   try {
     setTimeout(function() {}, event.timeout);
-    // TODO produce error
+    if (event.error) {
+      throw Error("error!");
+    }
     const result = {
       result: add(event.a, event.b)
     };
