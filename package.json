@@ -1,0 +1,33 @@
+{
+  "private": true,
+  "name": "calculator",
+  "version": "0.1.0",
+  "scripts": {
+    "format:test": "prettier --config '.prettierrc.json' --list-different '**/*.js' && (cd terraform && terraform fmt -check=true -list=true)",
+    "format:fix": "prettier --config '.prettierrc.json' --write '**/*.js' && (cd terraform && terraform fmt -write=true)",
+    "lint:test": "eslint --config .eslintrc.json '**/*.js'",
+    "lint:fix": "eslint --config .eslintrc.json '**/*.js' --fix",
+    "terraform": "set -e; cd terraform && terraform",
+    "test": "mocha test/",
+    "clean": "gulp clean || true; rm -rf node_modules",
+    "package": "gulp",
+    "deploy": "yarn package && yarn terraform apply -auto-approve",
+    "destroy": "yarn package && yarn terraform destroy -auto-approve"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "gulp": "^3.9.1",
+    "gulp-yarn": "^2.0.0",
+    "gulp-zip": "^4.2.0",
+    "lambda-local": "^1.5.1",
+    "mocha": "^5.2.0",
+    "rimraf": "^2.6.2",
+    "run-sequence": "^2.2.1",
+    "eslint": "^5.5.0",
+    "prettier": "^1.14.2",
+    "terraform-npm": "^0.2.6"
+  },
+  "dependencies": {
+    "sum-of-two-numbers": "^1.0.0"
+  }
+}

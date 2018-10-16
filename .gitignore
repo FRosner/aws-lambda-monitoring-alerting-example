@@ -1,0 +1,12 @@
+# node.js
+node_modules
+
+# app packaging
+stage
+dist
+
+# terraform
+terraform.tfstate
+terraform.tfstate.backup
+.terraform
+.terraform.tfstate.lock.info
