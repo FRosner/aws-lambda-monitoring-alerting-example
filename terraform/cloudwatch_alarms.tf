@@ -6,7 +6,7 @@ resource "aws_cloudwatch_metric_alarm" "calculator-time" {
   namespace           = "AWS/Lambda"
   period              = "60"
   statistic           = "Maximum"
-  threshold           = "${aws_lambda_function.calculator.timeout * 1000 / 2}"
+  threshold           = "${aws_lambda_function.calculator.timeout * 1000 * 0.75}"
   alarm_description   = "Calculator Execution Time"
   treat_missing_data  = "ignore"
 

@@ -1,7 +1,8 @@
 locals {
-  dashboard-calculator-time-color = "#1f77b4"
-  dashboard-calculator-memory-color = "#ff7f0e"
-  dashboard-calculator-error-color = "#d62728"
+  dashboard-calculator-max-time-color   = "#1f77b4"
+  dashboard-calculator-avg-time-color   = "#9467bd"
+  dashboard-calculator-memory-color     = "#ff7f0e"
+  dashboard-calculator-error-color      = "#d62728"
   dashboard-calculator-invocation-color = "#2ca02c"
 }
 
@@ -18,7 +19,7 @@ resource "aws_cloudwatch_dashboard" "main" {
       "width": 24,
       "height": 1,
       "properties": {
-        "markdown": "# ${aws_lambda_function.calculator.function_name})"
+        "markdown": "# ${aws_lambda_function.calculator.function_name}"
       }
     },
     {
@@ -37,7 +38,19 @@ resource "aws_cloudwatch_dashboard" "main" {
               "stat": "Maximum",
               "yAxis": "left",
               "label": "Maximum Execution Time",
-              "color": "${local.dashboard-calculator-time-color}",
+              "color": "${local.dashboard-calculator-max-time-color}",
+              "period": 10
+            }
+          ],
+          [
+            "AWS/Lambda", "Duration",
+            "FunctionName", "${aws_lambda_function.calculator.function_name}",
+            "Resource", "${aws_lambda_function.calculator.function_name}",
+            {
+              "stat": "Average",
+              "yAxis": "left",
+              "label": "Average Execution Time",
+              "color": "${local.dashboard-calculator-avg-time-color}",
               "period": 10
             }
           ]
@@ -57,7 +70,7 @@ resource "aws_cloudwatch_dashboard" "main" {
         "period": 300,
         "annotations": {
           "horizontal": [{
-              "color": "${local.dashboard-calculator-time-color}",
+              "color": "${local.dashboard-calculator-max-time-color}",
               "label": "Alarm Threshold",
               "value": ${aws_cloudwatch_metric_alarm.calculator-time.threshold}
             }
